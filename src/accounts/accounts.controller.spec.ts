@@ -25,7 +25,7 @@ describe('Accounts Controller', () => {
         balance: '1.0',
       };
 
-      jest.spyOn(service, 'getBalance').mockImplementation(() => of(result).toPromise());
+      jest.spyOn(service, 'getBalance').mockImplementation(() => Promise.resolve(result));
 
       expect(await controller.balance('account')).toBe(result);
     });
