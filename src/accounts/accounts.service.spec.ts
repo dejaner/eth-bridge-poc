@@ -1,14 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountsService } from './accounts.service';
+import { EthService } from '../eth/eth.service';
 
-jest.mock('web3');
+jest.mock('../eth/eth.service');
 
 describe('AccountsService', () => {
   let service: AccountsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AccountsService],
+      providers: [AccountsService, EthService],
     }).compile();
 
     service = module.get<AccountsService>(AccountsService);
