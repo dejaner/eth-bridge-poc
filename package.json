@@ -26,7 +26,9 @@
     "@nestjs/platform-express": "^6.0.0",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "scrypt": "^6.0.3",
+    "web3": "^1.0.0-beta.53"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
@@ -52,7 +54,8 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "ts"
+      "ts",
+      "node"
     ],
     "rootDir": "src",
     "testRegex": ".spec.ts$",

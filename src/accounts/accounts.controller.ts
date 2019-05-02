@@ -9,18 +9,18 @@ export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
   @Get(':account/balance')
-  balance(@Param('account') account: string): Observable<IAccountBalance> {
+  async balance(@Param('account') account: string): Promise<IAccountBalance> {
     return this.accountsService.getBalance(account);
   }
 
   @Get(':account/transactions')
-  findTransactions(@Param('account') account: string): Observable<IAccountTransactions> {
+  async findTransactions(@Param('account') account: string): Promise<IAccountTransactions> {
     return this.accountsService.getTransactions(account);
   }
 
   // Security-wise, this functionality should actually be implemented client-side
   @Post()
-  create(): Observable<IAccount> {
+  async create(): Promise<IAccount> {
     return this.accountsService.createAccount();
   }
 }

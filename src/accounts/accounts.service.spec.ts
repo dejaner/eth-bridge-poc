@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountsService } from './accounts.service';
 
+jest.mock('web3');
+
 describe('AccountsService', () => {
   let service: AccountsService;
 

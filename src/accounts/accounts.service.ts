@@ -1,17 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { IAccount, IAccountTransactions, IAccountTransaction, IAccountBalance } from './accounts.interface';
+import Web3 from 'web3';
 
 @Injectable()
 export class AccountsService {
+  web3: Web3;
 
-  getBalance(address: string): Observable<IAccountBalance> {
-    return of({
-      balance: '0.0',
-    });
+  constructor() {
+    this.web3 = new Web3('http://localhost:8545');
   }
 
-  getTransactions(address: string): Observable<IAccountTransactions> {
+  async getBalance(address: string): Promise<IAccountBalance> {
+    const balance = await this.web3.eth.getBalance(address);
+    return of({
+      balance: balance.toString(),
+    }).toPromise();
+  }
+
+  async getTransactions(address: string): Promise<IAccountTransactions> {
     const incoming: IAccountTransaction[] = [
       {
         to: 'receiving_account',
@@ -31,13 +38,14 @@ export class AccountsService {
     return of({
       incoming,
       outgoing,
-    });
+    }).toPromise();
   }
 
-  createAccount(): Observable<IAccount> {
+  async createAccount(): Promise<IAccount> {
+    const account = await this.web3.eth.accounts.create();
     return of({
-      address: 'address',
-      privateKey: 'pkey',
-    });
+      address: account.address,
+      privateKey: account.privateKey,
+    }).toPromise();
   }
 }

@@ -3,6 +3,8 @@ import { AccountsController } from './accounts.controller';
 import { AccountsService } from './accounts.service';
 import { of } from 'rxjs';
 
+jest.mock('./accounts.service');
+
 describe('Accounts Controller', () => {
   let controller: AccountsController;
   let service: AccountsService;
@@ -18,17 +20,14 @@ describe('Accounts Controller', () => {
   });
 
   describe('#balance()', () => {
-    it('returns account balance', async done => {
+    it('returns account balance', async () => {
       const result = {
         balance: '1.0',
       };
 
-      jest.spyOn(service, 'getBalance').mockImplementation(() => of(result));
+      jest.spyOn(service, 'getBalance').mockImplementation(() => of(result).toPromise());
 
-      controller.balance('account').subscribe(res => {
-        expect(res).toBe(result);
-        done();
-      });
+      expect(await controller.balance('account')).toBe(result);
     });
   });
 });
