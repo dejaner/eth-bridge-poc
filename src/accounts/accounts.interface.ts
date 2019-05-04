@@ -1,3 +1,5 @@
+import { TransactionEntity } from '../transactions/transaction.entity';
+
 export interface IAccountBalance {
   balance: string;
 }
@@ -14,6 +16,6 @@ export interface IAccountTransaction {
 }
 
 export interface IAccountTransactions {
-  incoming: IAccountTransaction[];
-  outgoing: IAccountTransaction[];
+  incoming: TransactionEntity[];
+  outgoing: TransactionEntity[];
 }

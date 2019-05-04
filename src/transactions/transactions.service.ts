@@ -11,8 +11,7 @@ export class TransactionsService {
   constructor(
     @InjectRepository(TransactionEntity)
     private readonly txRepository: Repository<TransactionEntity>,
-    private ethService: EthService
-
+    private ethService: EthService,
   ) {}
 
   async createTransaction(txData: DTOCreateTransaction): Promise<TransactionEntity> {
@@ -31,13 +30,13 @@ export class TransactionsService {
 
     const response = new Promise<TransactionEntity>(async resolve => {
       this.ethService.web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-        .on('transactionHash', (hash) => {
+        .on('transactionHash', async (hash) => {
           const tx = new TransactionEntity();
           tx.toAddr = unsignedTx.to;
           tx.fromAddr = account;
           tx.txHash = hash;
           tx.value = this.ethService.web3.utils.hexToNumberString(unsignedTx.value);
-          this.txRepository.save(tx);
+          await this.txRepository.save(tx);
 
           resolve(tx);
         });

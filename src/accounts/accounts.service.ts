@@ -1,35 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { IAccount, IAccountTransactions, IAccountTransaction, IAccountBalance } from './accounts.interface';
+import { IAccount, IAccountTransactions, IAccountBalance } from './accounts.interface';
 import { EthService } from '../eth/eth.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { TransactionEntity } from '../transactions/transaction.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AccountsService {
 
-  constructor(private ethService: EthService) { }
+  constructor(
+    @InjectRepository(TransactionEntity)
+    private readonly txRepository: Repository<TransactionEntity>,
+    private ethService: EthService,
+  ) { }
 
   async getBalance(address: string): Promise<IAccountBalance> {
     const balance = await this.ethService.web3.eth.getBalance(address);
+
     return Promise.resolve({
       balance: balance.toString(),
     });
   }
 
   async getTransactions(address: string): Promise<IAccountTransactions> {
-    const incoming: IAccountTransaction[] = [
-      {
-        to: 'receiving_account',
-        value: '0.0',
-        data: 'receiving_data',
-      },
-    ];
-
-    const outgoing: IAccountTransaction[] = [
-      {
-        to: 'receiving_account',
-        value: '0.0',
-        data: 'receiving_data',
-      },
-    ];
+    const incoming = await this.txRepository.find({ toAddr: address });
+    const outgoing = await this.txRepository.find({ fromAddr: address });
 
     return Promise.resolve({
       incoming,
