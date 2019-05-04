@@ -17,8 +17,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start": "node dist/server",
-    "webpack": "webpack --config webpack.config.js"
+    "start": "ts-node -r tsconfig-paths/register src/main.ts"
   },
   "dependencies": {
     "@nestjs/common": "^6.0.0",
@@ -48,10 +47,7 @@
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.7.0",
     "tslint": "5.12.1",
-    "typescript": "^3.2.4",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1",
-    "webpack-node-externals": "^1.7.2"
+    "typescript": "^3.2.4"
   },
   "jest": {
     "moduleFileExtensions": [
