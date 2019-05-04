@@ -1,4 +1,6 @@
 export interface ITransaction {
   txHash: string;
-  status: string;
+  toAddr: string;
+  fromAddr: string;
+  value: string;
 }

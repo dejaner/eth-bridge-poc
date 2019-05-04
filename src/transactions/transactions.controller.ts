@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { DTOCreateTransaction } from './dto/create-transaction.dto';
 import { TransactionsService } from './transactions.service';
-import { ITransaction } from './transactions.interface';
+import { TransactionEntity } from './transaction.entity';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -10,7 +10,7 @@ export class TransactionsController {
 
   // TODO: validate input parameters
   @Post()
-  async create(@Body() createTxData: DTOCreateTransaction): Promise<ITransaction> {
+  async create(@Body() createTxData: DTOCreateTransaction): Promise<TransactionEntity> {
     return this.transactionsService.createTransaction(createTxData);
   }
 }

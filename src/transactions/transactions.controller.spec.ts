@@ -27,8 +27,10 @@ describe('Transactions Controller', () => {
     };
 
     const result = {
-      txHash: 'tx-hash',
-      status: 'pending',
+      toAddr: 'toAddress',
+      fromAddr: 'fromAddress',
+      txHash: 'hash',
+      value: '100',
     };
 
     const spy = jest.spyOn(service, 'createTransaction').mockImplementation(() => Promise.resolve(result));
