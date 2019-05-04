@@ -13,4 +13,7 @@ export class TransactionEntity {
 
   @Column()
   value: string;
+
+  @Column()
+  status: string;
 }

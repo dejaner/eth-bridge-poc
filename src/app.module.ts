@@ -6,9 +6,12 @@ import { TransactionsController } from './transactions/transactions.controller';
 import { TransactionsService } from './transactions/transactions.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionEntity } from './transactions/transaction.entity';
+import envConfig from './config.env';
+
+const {ormtype: ormConfig} = envConfig;
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([TransactionEntity])],
+  imports: [TypeOrmModule.forRoot(ormConfig), TypeOrmModule.forFeature([TransactionEntity])],
   controllers: [AccountsController, TransactionsController],
   providers: [AccountsService, EthService, TransactionsService],
 })

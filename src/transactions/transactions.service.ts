@@ -36,6 +36,7 @@ export class TransactionsService {
           tx.fromAddr = account;
           tx.txHash = hash;
           tx.value = this.ethService.web3.utils.hexToNumberString(unsignedTx.value);
+          tx.status = 'pending';
           await this.txRepository.save(tx);
 
           resolve(tx);

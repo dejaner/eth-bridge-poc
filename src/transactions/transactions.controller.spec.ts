@@ -31,6 +31,7 @@ describe('Transactions Controller', () => {
       fromAddr: 'fromAddress',
       txHash: 'hash',
       value: '100',
+      status: 'pending',
     };
 
     const spy = jest.spyOn(service, 'createTransaction').mockImplementation(() => Promise.resolve(result));
