@@ -22,7 +22,7 @@ export class TransactionsService {
       to: txData.to,
       value: txData.value ? txData.value : '0',
       gas: 2000000,
-      chainId: 5777,
+      chainId: 15,
       nonce,
     };
 

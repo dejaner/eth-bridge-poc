@@ -6,7 +6,7 @@ import Web3 from 'web3';
 createConnection().then(async connection => {
     console.log('Starting block parser...');
 
-    const web3 = new Web3('ws://localhost:8545');
+    const web3 = new Web3('ws://ethereum:8546');
     const txRepository = getRepository(TransactionEntity);
 
     web3.eth.subscribe('newBlockHeaders')

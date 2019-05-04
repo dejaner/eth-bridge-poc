@@ -1,0 +1,32 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - ethereum
+    volumes:
+      - ./src:/usr/src/app/src
+
+  parser:
+    build: ./block-parser
+    depends_on:
+      - db
+      - ethereum
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eth-bridge
+      MYSQL_ROOT_HOST: "%"
+
+  ethereum:
+    build: ./ethereum
+    ports:
+      - "8546:8546"
+    command: --nodiscover --maxpeers 0 --mine --minerthreads 1 --verbosity 4 --wsaddr 0.0.0.0 --wsapi eth,web3,net --ws --wsorigins="*" --datadir /usr/src/mychain --networkid 15 --etherbase "0x0A3135Ca5f8aEA70920b0f2aBB03B5541528B5Ee"

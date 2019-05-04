@@ -2,7 +2,7 @@ const config = {
   development: {
     ormtype: {
       type: 'mysql',
-      host: 'localhost',
+      host: 'db',
       port: 3306,
       database: 'eth-bridge',
       username: 'root',
@@ -14,7 +14,7 @@ const config = {
   production: {
     ormtype: {
       type: 'mysql',
-      host: 'localhost',
+      host: 'db',
       port: 3306,
       database: 'eth-bridge',
       username: 'root',

@@ -6,6 +6,6 @@ export class EthService {
   web3: Web3;
 
   constructor() {
-    this.web3 = new Web3('http://localhost:8545');
+    this.web3 = new Web3('ws://ethereum:8546');
   }
 }
