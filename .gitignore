@@ -1,3 +1,4 @@
-node_modules
 dist
 .instructions
+node_modules
+block-parser/node_modules
