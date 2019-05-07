@@ -28,19 +28,25 @@ export class TransactionsService {
 
     const signedTx = await this.ethService.web3.eth.accounts.signTransaction(unsignedTx, txData.privateKey);
 
-    const response = new Promise<TransactionEntity>(async resolve => {
-      this.ethService.web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-        .on('transactionHash', async (hash) => {
-          const tx = new TransactionEntity();
-          tx.toAddr = unsignedTx.to;
-          tx.fromAddr = account;
-          tx.txHash = hash;
-          tx.value = this.ethService.web3.utils.hexToNumberString(unsignedTx.value);
-          tx.status = 'pending';
-          await this.txRepository.save(tx);
+    const response = new Promise<TransactionEntity>(async (resolve, reject) => {
+      try {
+        this.ethService.web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+          .on('transactionHash', async (hash) => {
+            const tx = new TransactionEntity();
+            tx.toAddr = unsignedTx.to;
+            tx.fromAddr = account;
+            tx.txHash = hash;
+            tx.value = this.ethService.web3.utils.hexToNumberString(unsignedTx.value);
+            tx.status = 'pending';
+            await this.txRepository.save(tx);
 
-          resolve(tx);
-        });
+            resolve(tx);
+          }).catch(error => {
+            reject(error);
+          });
+      } catch (error) {
+        reject(error);
+      }
     });
 
     return response;

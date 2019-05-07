@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { DTOCreateTransaction } from './dto/create-transaction.dto';
 import { TransactionsService } from './transactions.service';
 import { TransactionEntity } from './transaction.entity';
@@ -10,7 +10,12 @@ export class TransactionsController {
 
   // TODO: validate input parameters
   @Post()
-  async create(@Body() createTxData: DTOCreateTransaction): Promise<TransactionEntity> {
-    return this.transactionsService.createTransaction(createTxData);
+  create(@Body() createTxData: DTOCreateTransaction): Promise<TransactionEntity> {
+    return this.transactionsService.createTransaction(createTxData).catch(error => {
+      throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        error: error.message,
+      }, 400);
+    });
   }
 }
