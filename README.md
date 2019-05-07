@@ -1,10 +1,24 @@
 # Ethereum Bridge
 
+This local Eth-bridge proof of concept is comprised of 4 docker cointainers.
+* `db` database
+* `ethereum` geth node with a custom private chain
+* `parser` A simple ethereum block listener/tx parser
+* `web` a simple API for communicating with ETH chain
+
 ## Setting up the environment
 
-`docker-compose up db ethereum`
+Requirement: Docker
 
-`docker-compose up web parser`
+First run `docker-compose up db ethereum` to setup the prerequisites. There is no 'wait-for' script implemented for this PoC so this has to be run separately to ensure that requirement services are up and running.
+
+After requirements are running, run `docker-compose up web parser` to start the parser and web API. API is then available on `localhost:3000`
+
+## Example usage
+
+Available endpoints with examples are available here: https://documenter.getpostman.com/view/6393434/S1Lu3ViF
+
+These are defined with correct private-keys and addresses in requests to get you running.
 
 
 ## Private ETH network predefined accounts with balance
